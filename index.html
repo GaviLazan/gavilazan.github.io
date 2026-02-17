@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>My Portfolio</title>
+  </head>
+  <body>
+    <h1>Hi, I'm Gavi</h1>
+    <p>Welcome to my site.</p>
+
+    <h2>Projects</h2>
+    <div id="repos"></div>
+
+    <script>
+      fetch("https://api.github.com/users/GaviLazan/repos")
+        .then((response) => response.json())
+        .then((data) => {
+          const repoContainer = document.getElementById("repos");
+          data
+            .filter((repo) => !repo.fork)
+            .forEach((repo) => {
+              const repoElement = document.createElement("div");
+              repoElement.innerHTML = `
+              <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
+              <p>${repo.description || "No description provided."}</p>
+              <hr>
+            `;
+              repoContainer.appendChild(repoElement);
+            });
+        });
+    </script>
+  </body>
+</html>
